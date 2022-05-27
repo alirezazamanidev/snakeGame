@@ -10,6 +10,23 @@ let snake = [
     { x: 110, y: 150 },
 
 ]
+
+let foodX;
+let foody;
+
+Play();
+createfood();
+function Play(){
+    setTimeout(()=>{
+        clearCanvas()
+        drawFood()
+        // advanceSnake()
+        drawSnake();
+        
+        Play();
+    },100)
+
+}
 function clearCanvas() {
     ctx.fillStyle = 'white'
     ctx.strokeStyle = 'black'
@@ -17,13 +34,26 @@ function clearCanvas() {
     ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height)
     ctx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height)
 }
-clearCanvas();
 
 function drawSnake() { return snake.forEach(drawSnakePart) }
-drawSnake();
 function drawSnakePart(snakePart) {
     ctx.fillStyle = 'lightgreen';
     ctx.strokeStyle = 'black'
     ctx.fillRect(snakePart.x, snakePart.y, 10, 10);
     ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
+}
+function randomNumber(max, min) { return Math.round((Math.random() * (max - min) + min) / 10) * 10 }
+function createfood() {
+    foodX = randomNumber(0, gameCanvas.width - 10);
+    foodY = randomNumber(0, gameCanvas.height - 10);
+
+}
+function drawFood() {
+    ctx.fillStyle = "red";
+    ctx.strokeStyl = "darkred";
+
+    ctx.fillRect(foodX, foodY, 10, 10);
+    ctx.strokeRect(foodX, foodY, 10, 10);
+
+
 }
