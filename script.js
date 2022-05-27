@@ -10,6 +10,7 @@ let snake = [
     { x: 110, y: 150 },
 
 ]
+let changingDirection = false;
 document.addEventListener("keydown",changeDirection);
 
 let foodX;
@@ -23,7 +24,9 @@ let dy=0;
 Play();
 createfood();
 function Play(){
+    if(didGameEnd()) return;
     setTimeout(()=>{
+        changingDirection = false;
         clearCanvas()
         drawFood()
         advanceSnake()
@@ -32,6 +35,16 @@ function Play(){
         Play();
     },100)
 
+}
+function didGameEnd(){
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) return true;
+    }
+    const hitLeftWall = snake[0].x < 0;
+    const hitRightWall = snake[0].x > gameCanvas.width - 10;
+    const hitTopWall = snake[0].y < 0;
+    const hitBottomWall = snake[0].y > gameCanvas.height - 10;
+    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
 }
 function clearCanvas() {
     ctx.fillStyle = 'white'
@@ -89,7 +102,8 @@ function changeDirection(event){
     const RIGHT_KEY = 39;
     const UP_KEY = 38;
     const DOWN_KEY = 40;
-
+    if (changingDirection) return;
+    changingDirection = true;
     let keyPressed=event.keyCode;
     if(keyPressed===LEFT_KEY&& dx!==10){
         dx=-10;
