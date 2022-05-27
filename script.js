@@ -10,6 +10,7 @@ let snake = [
     { x: 110, y: 150 },
 
 ]
+document.addEventListener("keydown",changeDirection);
 
 let foodX;
 let foody;
@@ -56,7 +57,7 @@ function advanceSnake(){
 
         document.getElementById('score').innerHTML = score;
 
-        createFood();
+        createfood();
     } else {
         snake.pop()
     }
@@ -67,7 +68,7 @@ function createfood() {
     foodY = randomNumber(0, gameCanvas.height - 10);
     snake.forEach(snakePart=>{
         if(snakePart.x===foodX && snakePart.y===foodY){
-            createfood();
+            createfood()
         }
     })
 
@@ -79,5 +80,34 @@ function drawFood() {
     ctx.fillRect(foodX, foodY, 10, 10);
     ctx.strokeRect(foodX, foodY, 10, 10);
 
+
+}
+
+
+function changeDirection(event){
+    const LEFT_KEY = 37;
+    const RIGHT_KEY = 39;
+    const UP_KEY = 38;
+    const DOWN_KEY = 40;
+
+    let keyPressed=event.keyCode;
+    if(keyPressed===LEFT_KEY&& dx!==10){
+        dx=-10;
+        dy=0;
+    }   
+    if (keyPressed === RIGHT_KEY && dx!=-10) {
+        dx = 10;
+        dy = 0
+    }
+
+    if (keyPressed === UP_KEY && dy!==10) {
+        dx = 0;
+        dy = -10;
+    }
+
+    if (keyPressed === DOWN_KEY&&dy!==-10) {
+        dx = 0;
+        dy = 10;
+    }
 
 }
